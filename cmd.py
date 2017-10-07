@@ -2,6 +2,7 @@
 import os
 import env
 from prompt import prompt
+from launch import fetch_comm
 
 
 def init():
@@ -18,7 +19,11 @@ def init():
 
 
 def main():
-    print prompt(), env.findpath(raw_input())
+    print prompt(),
+    data = raw_input()
+    print env.findpath(data)
+    print fetch_comm(data)
+    fetch_comm(data).start()
 
 init()
 while True: main()
