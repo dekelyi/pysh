@@ -24,7 +24,7 @@ def main():
     try:
         fetch_comm(data).start()
     except Exception as e:
-        print type(e).__name__, e.message
+        print '{0.__class__.__name__}: {0}'.format(e)
 
 init()
 while True: main()
