@@ -1,0 +1,2 @@
+class NotSuchCommand(Exception):
+    pass

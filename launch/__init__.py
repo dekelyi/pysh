@@ -1,5 +1,8 @@
-from .base import Command as _Command
-from .chdir import Chdir as _Chdir
+import os
+from pkgutil import iter_modules
+from importlib import import_module
+
+from . import _utils
 
 
 def fetch_comm(commline):
@@ -10,7 +13,11 @@ def fetch_comm(commline):
     comm = args[0]
     del args[0]
 
-    if comm == 'cd':
-        return _Chdir(*args)
-    else:
-        return _Command(comm, args)
+    for _, module, _ in iter_modules([os.path.dirname(__file__)]):
+        mod = import_module('{}.{}'.format(__name__, module))
+        if not hasattr(mod, 'has'):
+            continue
+        if mod.has(comm):
+            return mod.get(comm, *args)
+    
+    raise _utils.NotSuchCommand(comm)

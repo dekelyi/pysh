@@ -2,7 +2,7 @@
 import os
 import env
 from prompt import prompt
-from launch import fetch_comm
+import launch
 
 
 def init():
@@ -22,9 +22,9 @@ def main():
     print prompt(),
     data = raw_input()
     try:
-        fetch_comm(data).start()
-    except Exception as e:
-        print '{0.__class__.__name__}: {0}'.format(e)
+        launch.fetch_comm(data).start()
+    except launch._utils.NotSuchCommand as e:
+        print 'Not Such Command:', e.args[0]
 
 init()
 while True: main()
