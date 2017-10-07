@@ -21,9 +21,10 @@ def init():
 def main():
     print prompt(),
     data = raw_input()
-    print env.findpath(data)
-    print fetch_comm(data)
-    fetch_comm(data).start()
+    try:
+        fetch_comm(data).start()
+    except Exception as e:
+        print type(e).__name__, e.message
 
 init()
 while True: main()
